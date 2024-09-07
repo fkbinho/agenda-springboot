@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,13 +41,13 @@ public class ContatoController {
     }
 
     @PostMapping
-    public ResponseEntity<ContatoDto> save(@RequestBody ContatoDto contatoDto){
+    public ResponseEntity<ContatoDto> save(@Valid @RequestBody ContatoDto contatoDto){
         Contato contato = contatoService.save(contatoDto);
         return ResponseEntity.ok().body(modelMapper.map(contato, ContatoDto.class));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContatoDto> update(@PathVariable Long id, @RequestBody ContatoDto contatoDto){
+    public ResponseEntity<ContatoDto> update(@Valid @PathVariable Long id, @RequestBody ContatoDto contatoDto){
         contatoDto.setId(id);
         Contato contato = contatoService.update(contatoDto);
         return ResponseEntity.ok().body(modelMapper.map(contato, ContatoDto.class));
